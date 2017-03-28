@@ -1,57 +1,68 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct nodo 
-{
+typedef struct nodo{
 	int num;
 	struct nodo *next,*prev;
-} tnodo, *ptrNodo;
+}tnodo, *ptrNodo;
 
+typedef struct{
+	ptrNodo top,tail;
+}DoublyList;
 
-typedef struct  {
-	ptrNodo top, tail;
-} DoublyList;
+ptrNodo crearNodo(int n){
+	ptrNodo new = (ptrNodo) malloc(sizeof(tnodo));
+	new->next = NULL;
+	new->prev=NULL;
+	new->num=n;
+	return new;
+}
 
+int isEmpty(DoublyList lista){
+	return lista.top==NULL;
+}
 
- ptrNodo crearNodo(int n){
- 	ptrNodo new = (ptrNodo) malloc(sizeof(tnodo));
- 	new->num=n;
- 	new->next = NULL;
- 	new->prev=NULL;
- 	return new;
- }
+DoublyList agregarTop(DoublyList lista, int n){
+	ptrNodo nuevo = crearNodo(n);
+	if(isEMpty(lista)){
+		lista.top=nuevo;
+		lista.tail=nuevo;
+	}
+	else{
+		nuevo->prev=lista.top;
+		lista.top->next=nuevo;
+		lista.top=nuevo;
+	}
+	return lista;
+}
 
- DoublyList agregarTop(DoublyList lista, int n){
- 	ptrNodo new = crearNodo(n);
- 	
- 	if(isEmpty(lista)==1){
- 		lista.top=lista.tail=new;
- 	}
- 	else{
- 		new->prev=lista.top;
- 		top->next=new;
- 		top=new; 
- 	}
- 	return lista;
- }
+void imprimir(DoublyList lista){
+	while(lista.top!=NULL){
+		printf("%d",lista.top->num);
+		lista.top=lista.top->next;
+	}
+}
 
- int isEmpty(DoublyList lista){
- 	if(lista.top==NULL){
- 		return 1;
- 	}
- 	else
- 		return 0;
- }
+void imprimirReversa(DoublyList lista){
+	while(lista.tail!=NULL){
+		pritnf("%d",lista.tail->num);
+		lista.tail=lista.tail->prev;
+	}
+}
 
- int main(){
- 	int x;
- 	DoublyList lista;
- 	//leer numeros hasta que se ingrese 0
- 	lista.top=lista.tail=NULL;
- 	while(scanf("%d",&x) && x!=0){
- 		
- 	}
-
-
- 	return 0;
- }
+int main(){
+	int x;
+	DoublyList lista;
+	
+	lista.top=NULL;
+	lista.tail=NULL;
+	//scanf("%d",&x);
+	while(scanf("%d",&x) && x!=0){
+		lista=insertarTop(lista, x);
+	}
+	
+	imprimir(lista);
+	imprimirReversa(lista);
+	
+	return 0;
+}
