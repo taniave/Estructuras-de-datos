@@ -23,32 +23,55 @@ int isEmpty(DoublyList lista){
 	return lista.top==NULL;
 }
 
+int isFull(DoublyList lista){
+	return lista.tail==NULL;
+}
+
 DoublyList insertTop(DoublyList lista, int n){
-	ptrNodo nuevo = crearNodo(n);
+	
+	ptrNodo new = crearNodo(n);
 	if(isEmpty(lista)){
-		lista.top=nuevo;
-		lista.tail=nuevo;
+		lista.top=new;
+		lista.tail=new;
 	}
 	else{
-		nuevo->prev=lista.top;
-		lista.top->next=nuevo;
-		lista.top=nuevo;
+		new->next=lista.top;
+		lista.top->prev=new;
+		lista.top=new;
 	}
 	return lista;
 }
 
-void imprimir(DoublyList lista){
-	while(lista.top!=NULL){
-		printf("%d\t",lista.top->num);
-		lista.top=lista.top->next;
+DoublyList insertTail(DoublyList lista, int n){
+	
+	ptrNodo new = crearNodo(n);
+	if(isFull(lista)){
+		lista.top=NULL;
+		lista.tail=new;
 	}
+	else{
+		new->next=lista.tail;
+		lista.tail->prev=new;
+		lista.tail=new;
+	}
+	return lista;
 }
 
 void imprimirReversa(DoublyList lista){
-	while(lista.tail!=NULL){
-		printf("%d\t",lista.tail->num);
-		lista.tail=lista.tail->prev;
+	printf("LISTA A LA INVERSA:\n");
+	while(lista.top!=NULL){
+		printf(" %d ",lista.top->num);
+		lista.top=lista.top->next;
 	}
+	printf("\n");
+}
+
+void imprimir(DoublyList lista){
+	printf("LISTA COMO FUE INGRESADA:\n");
+	while(lista.tail!=NULL){
+		printf(" %d ",lista.tail->num);
+		lista.tail=lista.tail->prev;
+	}printf("\n");
 }
 
 int main(){
@@ -59,7 +82,13 @@ int main(){
 	lista.tail=NULL;
 
 	while(scanf("%d",&x) && x!=0){
-		lista=insertTop(lista, x);
+		//lista=insertTail(lista,x);
+			if(lista.top == NULL){
+				lista=insertTop(lista, x);
+			}
+			else
+				lista=insertTail(lista,x);
+				
 	}
 	
 	imprimir(lista);
