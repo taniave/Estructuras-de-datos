@@ -1,3 +1,8 @@
+
+/*
+	USING A LINK LIST TO FIND IF A STRING IS A PALINDROME OR NOT
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
